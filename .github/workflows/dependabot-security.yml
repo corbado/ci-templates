@@ -65,16 +65,17 @@ jobs:
               ? `[Dependabot] Advisory for ${pkg} (${ghsa})`
               : `[Dependabot] Update for ${pkg} (${previousVersion} → ${newVersion})`;
 
+            // Only treat OPEN issues as duplicates
             const duplicateQuery = ghsa
-              ? `repo:${owner}/${repo} "${ghsa}" in:title is:issue`
-              : `repo:${owner}/${repo} "${pkg}" "${newVersion}" in:title is:issue`;
+              ? `repo:${owner}/${repo} "${ghsa}" in:title is:issue is:open`
+              : `repo:${owner}/${repo} "${pkg}" "${newVersion}" in:title is:issue is:open`;
 
             const search = await github.rest.search.issuesAndPullRequests({
               q: duplicateQuery,
             });
 
             if (search.data.total_count > 0) {
-              console.log('Issue already exists for this advisory, skipping.');
+              console.log('Open issue already exists for this advisory, skipping.');
               return;
             }
 
