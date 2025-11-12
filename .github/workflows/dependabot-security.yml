@@ -104,13 +104,19 @@ jobs:
               labels.push('security');
             }
 
+            // Parse assignees from team mention (remove @ and split by / or ,)
+            const assignees = teamMention
+              .split(/[\/,]/)
+              .map(name => name.trim().replace(/^@/, ''))
+              .filter(name => name.length > 0);
+
             await github.rest.issues.create({
               owner,
               repo,
               title,
               body,
               labels,
-              assignees: ['Dopeamin'],
+              assignees,
             });
 
   auto_merge_dependabot:
