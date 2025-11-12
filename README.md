@@ -32,7 +32,7 @@ permissions:
 
 jobs:
   dependabot-security:
-    uses: corbado/ci-templates/.github/workflows/dependabot-security.yml@v1
+    uses: corbado/ci-templates/.github/workflows/dependabot-security.yml@main
     secrets:
       repo-token: ${{ secrets.GITHUB_TOKEN }}
     with:
