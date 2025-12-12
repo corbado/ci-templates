@@ -8,6 +8,11 @@ on:
         type: boolean
         required: false
         default: true
+      wait-for-checks:
+        description: "Wait for all other checks to complete before merging"
+        type: boolean
+        required: false
+        default: true
       team_mention:
         description: "Team or users to mention in the tracking issue"
         type: string
@@ -127,6 +132,7 @@ jobs:
 
     steps:
       - name: Wait for all checks to complete
+        if: inputs.wait-for-checks == true
         uses: lewagon/wait-on-check-action@v1.3.3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
