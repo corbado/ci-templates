@@ -108,7 +108,8 @@ jobs:
             const assignees = teamMention
               .split(/[\/,]/)
               .map(name => name.trim().replace(/^@/, ''))
-              .filter(name => name.length > 0);
+              .filter(name => name.length > 0)
+              .filter(name => name !== 'Dopeamin');
 
             await github.rest.issues.create({
               owner,
